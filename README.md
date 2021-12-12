@@ -1,10 +1,10 @@
-# pic - pi controller
+# rpic - raspberry pi controller
 
-raspberry pi's have been leveraged for more and more projects, however, since the base system for raspberry pi is typically linux based, there needs to be a level of technical ability to perform most simple tasks like a graceful shutdown.
+raspberry pi's have been leveraged for many projects like a controller for home lighting or as an ad blocking proxy server, however, since the base system for raspberry pi is typically linux based, there needs to be a level of technical ability to perform most simple tasks like a graceful shutdown.
 
-pi controller (pic) is a remote management system for your raspberry pi device built on top of raspbian, the goal is to provide a set of administrative functions and api's to simplify the usage of a raspberry pi.
+raspberry pi controller (rpic) is a remote management system for your raspberry pi device built on top of raspbian, the goal is to provide a set of administrative functions and api's to simplify the usage of a raspberry pi.
 
-pic will be based on raspbian initially since that's what seems most common, but could be ported to other linux distributions.
+rpic will be based on raspbian initially which is the most widely used distribution for raspberry pi, but could be ported to other linux distributions.
 
 ## features
 
@@ -32,6 +32,8 @@ this can be considered firmware for all intensive purposes, but raspbian operati
 
 `there should be an online and offline method.`
 
+`there should also be an auto-update process.`
+
 ### upgrade software
 
 software applications that run on top of raspbian requires updates, this may or may not require restart of the device.
@@ -52,10 +54,10 @@ backup state and restore from past points in time.
 
 ## security
 
-since most of these commands require super user privileges on raspbian, this could have some serious security implications, so there needs to be some level of security to access these capabilities like a user/password for pic.  this password can be configured and there needs to be a way to reset the system in case the password is forgotten. 
+since most of these commands require super user privileges on raspbian, this could have some serious security implications, so there needs to be some level of security to access these capabilities like a user/password for rpic.  this password can be configured and there needs to be a way to reset the system in case the password is forgotten. 
 
 ## interface
 
-pic will provide a restful api which can be accessed by developers to integrate wit their application or to write custom clients.  the most basic client will be included as a web interface which can be enabled or disabled.
+rpic will provide a restful api which can be accessed by developers to integrate with their application or to write custom clients.  the most basic client will be included as a web interface which can be enabled or disabled.
 
-an ios client may be added, however, intrinsically, most applications will want to have their own user interface as opposed to the pic interface and their own interface.
+an ios client may be added, however, intrinsically, most applications will want to have the functionality embedded into their own user interface as opposed to having to use multiple interfaces.
