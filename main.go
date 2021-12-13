@@ -13,6 +13,7 @@ func initRouter() *mux.Router {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/api/systems", systemHandler)
+	router.HandleFunc("/api/version", versionHandler)
 
 	return router
 

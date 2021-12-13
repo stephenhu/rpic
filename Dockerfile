@@ -7,5 +7,5 @@ FROM ubuntu
 WORKDIR /usr/local/rpic
 RUN apt-get update -y
 COPY --from=builder /go/rpic/rpic .
-EXPOSE 12000
+EXPOSE 9008
 CMD ["/usr/local/rpic/rpic"]
