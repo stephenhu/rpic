@@ -19,14 +19,16 @@ func systemHandler(w http.ResponseWriter, r *http.Request) {
 		} else {
 
 			switch(operation) {
-			case OPERATION_LS:
+			case OPERATION_REBOOT:
 				
-				err := command(CMD_LS)
+				err := command(CMD_REBOOT)
 
 				if err != nil {
+					
 					log.Println(err)
-				}
+					w.WriteHeader(http.StatusInternalServerError)
 
+				}
 
 			case OPERATION_SHUTDOWN:
 
@@ -38,7 +40,6 @@ func systemHandler(w http.ResponseWriter, r *http.Request) {
 					w.WriteHeader(http.StatusInternalServerError)
 
 				}
-
 
 			default:
 				log.Printf("%s operation not found", operation)

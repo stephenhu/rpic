@@ -1,12 +1,10 @@
 package main
 
 import (
-	"errors"
+	"errors"	
 	"fmt"
-	"os"
-	"os/exec"
-	"strings"
-	"syscall"
+	"log"
+	"os/exec"	
 )
 
 
@@ -18,37 +16,15 @@ func addr() string {
 func command(s string) error {
 
 	if s == "" {
-		return errors.New("Invalid command, please enter a valid command.")
+		return errors.New("Please input valid command.")
 	}
 
-	args := strings.Split(s, CH_SPACE)
+	cmd := exec.Command(s)
 
-	if len(args) == 0 {
-		return errors.New("Invalid command, please enter a valid command.")
-	}
+	out, err := cmd.Output()
 
-	index := 1
+	log.Println(string(out))
 
-	if len(args) == 1 {
-		index = 0
-	}
-
-	bin, err := exec.LookPath(args[index])
-
-	if err != nil {
-		return err
-	} else {
-
-		env := os.Environ()
-
-		err := syscall.Exec(bin, args, env)
-
-		if err != nil {
-			return err	
-		}
-		
-		return nil
-
-	}
+	return err
 
 } // command
