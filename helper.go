@@ -19,7 +19,7 @@ func command(s string) error {
 		return errors.New("Please input valid command.")
 	}
 
-	cmd := exec.Command(s)
+	cmd := exec.Command(CMD_SYSTEMCTL, s)
 
 	out, err := cmd.Output()
 

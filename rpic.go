@@ -20,8 +20,9 @@ const (
 
 const (
 	CMD_LS              = "dir"
-	CMD_REBOOT          = "systemctl reboot"
-	CMD_SHUTDOWN				= "systemctl poweroff"
+	CMD_REBOOT          = "reboot"
+	CMD_SHUTDOWN				= "poweroff"
+	CMD_SYSTEMCTL       = "systemctl"
 )
 
 const (
