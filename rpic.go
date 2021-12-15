@@ -8,6 +8,7 @@ const (
 )
 
 const (
+	PARAM_NAME          = "name"
 	PARAM_OPERATION			= "operation"
 )
 
@@ -22,7 +23,16 @@ const (
 	CMD_LS              = "dir"
 	CMD_REBOOT          = "reboot"
 	CMD_SHUTDOWN				= "poweroff"
+	CMD_WIREGUARD       = "wg-quick@wg0"
 	CMD_SYSTEMCTL       = "systemctl"
+)
+
+const (
+	CMD_OPTION_RESTART  = "restart"
+	CMD_OPTION_START    = "start"
+	CMD_OPTION_STATUS   = "status"
+	CMD_OPTION_STOP     = "stop"
+	CMD_OPTION_NONE     = "none"
 )
 
 const (
