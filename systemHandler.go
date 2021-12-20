@@ -21,7 +21,7 @@ func systemHandler(w http.ResponseWriter, r *http.Request) {
 			switch(operation) {
 			case OPERATION_REBOOT:
 				
-				err := systemCtl(CMD_REBOOT, CMD_OPTION_NONE)
+				err := callService(SYSTEMD, SYSTEMD_PATH, SYSTEMD_REBOOT)
 
 				if err != nil {
 					
@@ -32,7 +32,7 @@ func systemHandler(w http.ResponseWriter, r *http.Request) {
 
 			case OPERATION_SHUTDOWN:
 
-				err := systemCtl(CMD_SHUTDOWN, CMD_OPTION_NONE)
+				err := callService(SYSTEMD, SYSTEMD_PATH, SYSTEMD_POWEROFF)
 
 				if err != nil {
 					

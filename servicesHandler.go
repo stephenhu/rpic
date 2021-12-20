@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -23,14 +24,25 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 		} else {
 
 			// TODO: add sqlite3 to store services
-			if name == "wireguard" {
+			if strings.ToLower(name) == "wireguard" {
 				
-				err := systemCtl(CMD_WIREGUARD, CMD_OPTION_STOP)
+				err := connectDbus()
 
 				if err != nil {
 					
 					log.Println(err)
 					w.WriteHeader(http.StatusInternalServerError)
+
+				} else {
+					
+					err := stopService()
+
+					if err != nil {
+						
+						log.Println(err)
+						w.WriteHeader(http.StatusInternalServerError)
+
+					}
 
 				}
 
