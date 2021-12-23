@@ -19,23 +19,6 @@ const (
 )
 
 const (
-	CMD_LS              	= "dir"
-	CMD_REBOOT          	= "reboot"
-	CMD_SHUTDOWN					= "poweroff"
-	CMD_WIREGUARD       	= "wg-quick@wg0"
-	CMD_SYSTEMCTL       	= "systemctl"
-)
-
-const (
-	CMD_OPTION_RESTART  	= "restart"
-	CMD_OPTION_START    	= "start"
-	CMD_OPTION_STATUS   	= "status"
-	CMD_OPTION_STOP     	= "stop"
-	CMD_OPTION_NONE     	= "none"
-	CMD_OPTION_IS_ACTIVE	= "is-active"
-)
-
-const (
   DBUS_LOGIN            = "org.freedesktop.login1"
   DBUS_LOGIN_MANAGER    = "org.freedesktop.login1.Manager"
   DBUS_LOGIN_PATH       = "/org/freedesktop/login1"
