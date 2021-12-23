@@ -24,13 +24,13 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 		} else {
 
 			// TODO: add sqlite3 to store services
-			if strings.ToLower(name) == "wireguard" {
+			if strings.ToLower(name) == WIREGUARD {
 
         method := r.FormValue(PARAM_METHOD)
 
         if checkSystemdMethod(method) {
         
-				  err := callSystemd(method, "wireguard")
+				  err := callSystemd(method, SERVICE_WIREGUARD)
 
 				  if err != nil {
 						

@@ -110,7 +110,7 @@ func callSystemd(m string, s string) error {
 
   //defer cancel()
 
-  conn, err := dbus.ConnectSessionBus()
+  conn, err := dbus.ConnectSystemBus()
 
   if err != nil {
     log.Println(err)
@@ -124,7 +124,8 @@ func callSystemd(m string, s string) error {
   switch(m) {
   case SYSTEMD_UNIT_START:
 
-    err := obj.Call(methodName(DBUS_SYSTEMD, m), 0, "snapd.service", "replace").Store(&out)
+    err := obj.Call(methodName(DBUS_SYSTEMD, m), 0, s,
+      "replace").Store(&out)
 
     if err != nil {
       log.Println(err)
@@ -133,7 +134,8 @@ func callSystemd(m string, s string) error {
 
   case SYSTEMD_UNIT_STOP:
 
-    err := obj.Call(methodName(DBUS_SYSTEMD, m), 0, "snapd.service", "replace").Store(&out)
+    err := obj.Call(methodName(DBUS_SYSTEMD, m), 0, s,
+      "replace").Store(&out)
 
     if err != nil {
       log.Println(err)

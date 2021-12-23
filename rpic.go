@@ -56,6 +56,14 @@ const (
 )
 
 const (
+  WIREGUARD             = "wireguard"
+)
+
+const (
+  SERVICE_WIREGUARD     = "wg-quick@wg0.service"
+)
+
+const (
 	HTTP_CONTENT_TYPE			= "Content-Type"
 )
 
