@@ -37,6 +37,7 @@ const (
   SYSTEMD_UNIT_RESTART  = "RestartUnit"
 	SYSTEMD_UNIT_START    = "StartUnit"
 	SYSTEMD_UNIT_STOP     = "StopUnit"
+  SYSTEMD_UNIT_MODE_REPLACE     = "replace"
 )
 
 const (

@@ -1,12 +1,12 @@
 package main
 
 import (
-  //"context"
+  "context"
 	"errors"
 	"fmt"
 	"log"
   "strings"
-  //"time"
+  "time"
 
 	"github.com/godbus/dbus/v5"
 )
@@ -54,10 +54,10 @@ func callLogin(m string) error {
     return errors.New("Invalid login method call")
   }
 
-  //ctx, cancel := context.WithTimeout(context.Background(),
-  //  MAX_TIMEOUT * time.Second)
+  ctx, cancel := context.WithTimeout(context.Background(),
+    MAX_TIMEOUT * time.Second)
 
-  //defer cancel()
+  defer cancel()
 
   conn, err := dbus.ConnectSystemBus()
 
@@ -78,7 +78,8 @@ func callLogin(m string) error {
 
   case power:
   
-    err := obj.Call(methodName(DBUS_LOGIN, LOGIN_POWEROFF), 0, false).Store(&out)
+    err := obj.CallWithContext(ctx, methodName(DBUS_LOGIN,
+      LOGIN_POWEROFF), 0, false).Store(&out)
 
     if err != nil {
       log.Println(err)
@@ -89,7 +90,8 @@ func callLogin(m string) error {
 
   case reboot:
 
-    err := obj.Call(methodName(DBUS_LOGIN, LOGIN_REBOOT), 0, false).Store(&out)
+    err := obj.CallWithContext(ctx, methodName(DBUS_LOGIN,
+      LOGIN_REBOOT), 0, false).Store(&out)
 
     if err != nil {
       log.Println(err)
@@ -116,10 +118,10 @@ func callSystemd(m string, s string) error {
     return errors.New("Invalid systemd method call")
   }
 
-  //ctx, cancel := context.WithTimeout(context.Background(),
-  //  MAX_TIMEOUT * time.Second)
+  ctx, cancel := context.WithTimeout(context.Background(),
+    MAX_TIMEOUT * time.Second)
 
-  //defer cancel()
+  defer cancel()
 
   conn, err := dbus.ConnectSystemBus()
 
@@ -140,8 +142,8 @@ func callSystemd(m string, s string) error {
   switch(method) {
   case restart:
 
-    err := obj.Call(methodName(DBUS_SYSTEMD, SYSTEMD_UNIT_RESTART), 0, s,
-      "replace").Store(&out)
+    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD,
+      SYSTEMD_UNIT_RESTART), 0, s, SYSTEMD_UNIT_MODE_REPLACE).Store(&out)
 
     if err != nil {
       log.Println(err)
@@ -150,8 +152,8 @@ func callSystemd(m string, s string) error {
 
   case start:
 
-    err := obj.Call(methodName(DBUS_SYSTEMD, SYSTEMD_UNIT_START), 0, s,
-      "replace").Store(&out)
+    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD,
+      SYSTEMD_UNIT_START), 0, s, SYSTEMD_UNIT_MODE_REPLACE).Store(&out)
 
     if err != nil {
       log.Println(err)
@@ -160,8 +162,8 @@ func callSystemd(m string, s string) error {
 
   case stop:
 
-    err := obj.Call(methodName(DBUS_SYSTEMD, SYSTEMD_UNIT_STOP), 0, s,
-      "replace").Store(&out)
+    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD,
+      SYSTEMD_UNIT_STOP), 0, s, SYSTEMD_UNIT_MODE_REPLACE).Store(&out)
 
     if err != nil {
       log.Println(err)
