@@ -35,10 +35,11 @@ func checkLoginMethod(m string) bool {
 func checkSystemdMethod(m string) bool {
 
   s := strings.ToLower(m)
+  r := strings.ToLower(SYSTEMD_UNIT_RESTART)
   t := strings.ToLower(SYSTEMD_UNIT_START)
   p := strings.ToLower(SYSTEMD_UNIT_STOP)
-
-  if len(m) == 0 || (s != t && s != p) {
+  
+  if len(m) == 0 || (s != r && s != t && s != p) {
     return false
   } else {
     return true
@@ -131,11 +132,22 @@ func callSystemd(m string, s string) error {
 
   var out string
 
-  method := strings.ToLower(m)
-  start  := strings.ToLower(SYSTEMD_UNIT_START)
-  stop   := strings.ToLower(SYSTEMD_UNIT_STOP)
+  method    := strings.ToLower(m)
+  restart   := strings.ToLower(SYSTEMD_UNIT_RESTART)
+  start     := strings.ToLower(SYSTEMD_UNIT_START)
+  stop      := strings.ToLower(SYSTEMD_UNIT_STOP)
 
   switch(method) {
+  case restart:
+
+    err := obj.Call(methodName(DBUS_SYSTEMD, SYSTEMD_UNIT_RESTART), 0, s,
+      "replace").Store(&out)
+
+    if err != nil {
+      log.Println(err)
+      return err
+    }
+
   case start:
 
     err := obj.Call(methodName(DBUS_SYSTEMD, SYSTEMD_UNIT_START), 0, s,
