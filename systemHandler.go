@@ -12,37 +12,17 @@ func systemHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 	case http.MethodPut:
 
-		operation := r.FormValue(PARAM_OPERATION)
+		m := r.FormValue(PARAM_METHOD)
 
-		if operation == "" {
-			w.WriteHeader(http.StatusBadRequest)
-		} else {
+    if checkLoginMethod(m) {
+		  
+      err := callLogin(m)
 
-			switch(operation) {
-			case OPERATION_REBOOT:
-				
-				err := callService(SYSTEMD, SYSTEMD_PATH, SYSTEMD_REBOOT)
-
-				if err != nil {
+			if err != nil {
 					
-					log.Println(err)
-					w.WriteHeader(http.StatusInternalServerError)
+				log.Println(err)
+				w.WriteHeader(http.StatusInternalServerError)
 
-				}
-
-			case OPERATION_SHUTDOWN:
-
-				err := callService(SYSTEMD, SYSTEMD_PATH, SYSTEMD_POWEROFF)
-
-				if err != nil {
-					
-					log.Println(err)
-					w.WriteHeader(http.StatusInternalServerError)
-
-				}
-
-			default:
-				log.Printf("%s operation not found", operation)
 			}
 
 		}

@@ -25,24 +25,24 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 
 			// TODO: add sqlite3 to store services
 			if strings.ToLower(name) == "wireguard" {
-				
-				err := connectDbus()
 
-				if err != nil {
-					
-					log.Println(err)
-					w.WriteHeader(http.StatusInternalServerError)
+        method := r.FormValue(PARAM_METHOD)
 
-				} else {
-					
-					err := stopService()
+        if checkSystemdMethod(method) {
+        
+				  err := callSystemd(method, "wireguard")
 
-					if err != nil {
+				  if err != nil {
 						
-						log.Println(err)
-						w.WriteHeader(http.StatusInternalServerError)
+				    log.Println(err)
+				    w.WriteHeader(http.StatusInternalServerError)
 
-					}
+          }
+
+        } else {
+
+          log.Println("Invalid systemd method")
+          w.WriteHeader(http.StatusBadRequest)
 
 				}
 
@@ -59,3 +59,4 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 } // servicesHandler
+

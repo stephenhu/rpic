@@ -9,14 +9,13 @@ const (
 
 const (
 	PARAM_NAME          	= "name"
-	PARAM_OPERATION				= "operation"
+	PARAM_METHOD				  = "method"
 )
 
 const (
-	OPERATION_LS        	= "ls"
-	OPERATION_REBOOT    	= "reboot"
-	OPERATION_SHUTDOWN		= "shutdown"
-	OPERATION_SUSPEND   	= "suspend"
+	ACTION_REBOOT    	    = "reboot"
+	ACTION_SHUTDOWN		    = "shutdown"
+	ACTION_SUSPEND   	    = "suspend"
 )
 
 const (
@@ -37,13 +36,23 @@ const (
 )
 
 const (
-  SYSTEMD								= "org.freedesktop.systemd1"
-  SYSTEMD_MANAGE   			= "Manage"
-	SYSTEMD_PATH     			= "/org/freedesktop/systemd1"
-	SYSTEMD_POWEROFF 			= "poweroff"
-	SYSTEMD_REBOOT        = "reboot"
-	SYSTEMD_START    			= "StartUnit"
-	SYSTEMD_STOP     			= "StopUnit"
+  DBUS_LOGIN            = "org.freedesktop.login1"
+  DBUS_LOGIN_MANAGER    = "org.freedesktop.login1.Manager"
+  DBUS_LOGIN_PATH       = "/org/freedesktop/login1"
+  DBUS_MANAGER          = "Manager"
+  DBUS_SYSTEMD          = "org.freedesktop.systemd1"
+  DBUS_SYSTEMD_MANAGER  = "org.freedesktop.systemd1.Manager"
+  DBUS_SYSTEMD_PATH     = "/org/freedesktop/systemd1"
+)
+
+const (
+	LOGIN_POWEROFF 			  = "PowerOff"
+	LOGIN_REBOOT          = "Reboot"
+)
+
+const (
+	SYSTEMD_UNIT_START    = "StartUnit"
+	SYSTEMD_UNIT_STOP     = "StopUnit"
 )
 
 const (
@@ -57,3 +66,8 @@ const (
 const (
 	CH_SPACE							= " "
 )
+
+const (
+  MAX_TIMEOUT           = 5
+)
+
