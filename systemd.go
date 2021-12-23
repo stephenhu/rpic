@@ -67,7 +67,7 @@ func callLogin(m string) error {
 
   case LOGIN_POWEROFF:
   
-    err := obj.Call(methodName(DBUS_LOGIN, m), 0, m, false).Store(&out)
+    err := obj.Call(methodName(DBUS_LOGIN, m), 0, false).Store(&out)
 
     if err != nil {
       log.Println(err)
@@ -78,7 +78,7 @@ func callLogin(m string) error {
 
   case LOGIN_REBOOT:
 
-    err := obj.Call(methodName(DBUS_LOGIN, m), 0, m, false).Store(&out)
+    err := obj.Call(methodName(DBUS_LOGIN, m), 0, false).Store(&out)
 
     if err != nil {
       log.Println(err)
