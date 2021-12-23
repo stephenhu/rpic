@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"log"
+  "strings"
   //"time"
 
-  //"github.com/coreos/go-systemd/v22/dbus"
 	"github.com/godbus/dbus/v5"
 )
 
@@ -19,8 +19,11 @@ func methodName(s string, m string) string {
 
 func checkLoginMethod(m string) bool {
 
-  if len(m) == 0 || (m != LOGIN_REBOOT &&
-    m != LOGIN_POWEROFF) {
+  s := strings.ToLower(m)
+  r := strings.ToLower(LOGIN_REBOOT)
+  p := strings.ToLower(LOGIN_POWEROFF)
+
+  if len(m) == 0 || (s != r && s != p) {
     return false
   } else {
     return true
@@ -31,8 +34,11 @@ func checkLoginMethod(m string) bool {
 
 func checkSystemdMethod(m string) bool {
 
-  if len(m) == 0 || (m != SYSTEMD_UNIT_START &&
-    m != SYSTEMD_UNIT_STOP) {
+  s := strings.ToLower(m)
+  t := strings.ToLower(SYSTEMD_UNIT_START)
+  p := strings.ToLower(SYSTEMD_UNIT_STOP)
+
+  if len(m) == 0 || (s != t && s != p) {
     return false
   } else {
     return true
@@ -63,11 +69,15 @@ func callLogin(m string) error {
 
   var out string
 
-  switch(m) {
+  method := strings.ToLower(m)
+  power  := strings.ToLower(LOGIN_POWEROFF)
+  reboot := strings.ToLower(LOGIN_REBOOT)
 
-  case LOGIN_POWEROFF:
+  switch(method) {
+
+  case power:
   
-    err := obj.Call(methodName(DBUS_LOGIN, m), 0, false).Store(&out)
+    err := obj.Call(methodName(DBUS_LOGIN, LOGIN_POWEROFF), 0, false).Store(&out)
 
     if err != nil {
       log.Println(err)
@@ -76,9 +86,9 @@ func callLogin(m string) error {
 
     log.Println(out)
 
-  case LOGIN_REBOOT:
+  case reboot:
 
-    err := obj.Call(methodName(DBUS_LOGIN, m), 0, false).Store(&out)
+    err := obj.Call(methodName(DBUS_LOGIN, LOGIN_REBOOT), 0, false).Store(&out)
 
     if err != nil {
       log.Println(err)
@@ -121,10 +131,14 @@ func callSystemd(m string, s string) error {
 
   var out string
 
-  switch(m) {
-  case SYSTEMD_UNIT_START:
+  method := strings.ToLower(m)
+  start  := strings.ToLower(SYSTEMD_UNIT_START)
+  stop   := strings.ToLower(SYSTEMD_UNIT_STOP)
 
-    err := obj.Call(methodName(DBUS_SYSTEMD, m), 0, s,
+  switch(method) {
+  case start:
+
+    err := obj.Call(methodName(DBUS_SYSTEMD, SYSTEMD_UNIT_START), 0, s,
       "replace").Store(&out)
 
     if err != nil {
@@ -132,9 +146,9 @@ func callSystemd(m string, s string) error {
       return err
     }
 
-  case SYSTEMD_UNIT_STOP:
+  case stop:
 
-    err := obj.Call(methodName(DBUS_SYSTEMD, m), 0, s,
+    err := obj.Call(methodName(DBUS_SYSTEMD, SYSTEMD_UNIT_STOP), 0, s,
       "replace").Store(&out)
 
     if err != nil {
