@@ -11,15 +11,25 @@ import (
 
 func servicesHandler(w http.ResponseWriter, r *http.Request) {
 
+	vars := mux.Vars(r)
+
+	name := vars[PARAM_NAME]
+
 	switch r.Method {
 	case http.MethodGet:
+
+		out, err := callSystemd(SYSTEMD_UNIT_GET, SERVICE_WIREGUARD)
+
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+		}
+
+		log.Println(out)
+
 	case http.MethodPut:
 
-		vars := mux.Vars(r)
-
-		name := vars[PARAM_NAME]
-
-		if name == "" {
+		if !checkParam(name) {
 			w.WriteHeader(http.StatusBadRequest)
 		} else {
 
@@ -30,7 +40,7 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 
         if checkSystemdMethod(method) {
         
-				  err := callSystemd(method, SERVICE_WIREGUARD)
+				  _, err := callSystemd(method, SERVICE_WIREGUARD)
 
 				  if err != nil {
 						
@@ -52,7 +62,7 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 
 	case http.MethodPost:
 
-		// TODO: add service
+		// TODO: add service, need to consider security
 
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)

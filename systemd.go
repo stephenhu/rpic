@@ -38,8 +38,9 @@ func checkSystemdMethod(m string) bool {
   r := strings.ToLower(SYSTEMD_UNIT_RESTART)
   t := strings.ToLower(SYSTEMD_UNIT_START)
   p := strings.ToLower(SYSTEMD_UNIT_STOP)
+  g := strings.ToLower(SYSTEMD_UNIT_GET)
   
-  if len(m) == 0 || (s != r && s != t && s != p) {
+  if len(m) == 0 || (s != r && s != t && s != p && s != g) {
     return false
   } else {
     return true
@@ -53,11 +54,6 @@ func callLogin(m string) error {
   if !checkLoginMethod(m) {
     return errors.New("Invalid login method call")
   }
-
-  ctx, cancel := context.WithTimeout(context.Background(),
-    MAX_TIMEOUT * time.Second)
-
-  defer cancel()
 
   conn, err := dbus.ConnectSystemBus()
 
@@ -73,6 +69,11 @@ func callLogin(m string) error {
   method := strings.ToLower(m)
   power  := strings.ToLower(LOGIN_POWEROFF)
   reboot := strings.ToLower(LOGIN_REBOOT)
+
+  ctx, cancel := context.WithTimeout(context.Background(),
+  MAX_TIMEOUT * time.Second)
+
+  defer cancel()
 
   switch(method) {
 
@@ -108,26 +109,21 @@ func callLogin(m string) error {
 } // callLogin
 
 
-func callSystemd(m string, s string) error {
+func callSystemd(m string, s string) (string, error) {
 
-  if s == "" {
-    return errors.New("systemd service name cannot be blank")
+  if !checkParam(m, s) {
+    return STR_EMPTY, errors.New("systemd service name cannot be blank")
   }
 
   if !checkSystemdMethod(m) {
-    return errors.New("Invalid systemd method call")
+    return STR_EMPTY, errors.New("Invalid systemd method call")
   }
-
-  ctx, cancel := context.WithTimeout(context.Background(),
-    MAX_TIMEOUT * time.Second)
-
-  defer cancel()
 
   conn, err := dbus.ConnectSystemBus()
 
   if err != nil {
     log.Println(err)
-    return err
+    return STR_EMPTY, err
   }
 
   obj := conn.Object(DBUS_SYSTEMD, dbus.ObjectPath(DBUS_SYSTEMD_PATH))
@@ -138,6 +134,12 @@ func callSystemd(m string, s string) error {
   restart   := strings.ToLower(SYSTEMD_UNIT_RESTART)
   start     := strings.ToLower(SYSTEMD_UNIT_START)
   stop      := strings.ToLower(SYSTEMD_UNIT_STOP)
+  get       := strings.ToLower(SYSTEMD_UNIT_GET)
+
+  ctx, cancel := context.WithTimeout(context.Background(),
+  MAX_TIMEOUT * time.Second)
+
+  defer cancel()
 
   switch(method) {
   case restart:
@@ -147,7 +149,7 @@ func callSystemd(m string, s string) error {
 
     if err != nil {
       log.Println(err)
-      return err
+      return STR_EMPTY, err
     }
 
   case start:
@@ -157,7 +159,7 @@ func callSystemd(m string, s string) error {
 
     if err != nil {
       log.Println(err)
-      return err
+      return STR_EMPTY, err
     }
 
   case stop:
@@ -167,16 +169,71 @@ func callSystemd(m string, s string) error {
 
     if err != nil {
       log.Println(err)
-      return err
+      return STR_EMPTY, err
     }
 
+  case get:
+
+    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD,
+      SYSTEMD_UNIT_GET), 0, s).Store(&out)
+
+
+    if err != nil {
+      log.Println(err)
+      return STR_EMPTY, err
+    } else {
+      return out, nil
+    }
 
   default:
     log.Println("Unknown org.freedesktop.systemd1 method")
 
   }
 
-  return nil
+  return STR_EMPTY, nil
 
 } // callSystemd
 
+
+func getUnitProperty(s string, p string) (string, error) {
+
+  if !checkParam(s, p) {
+    return STR_EMPTY, errors.New(fmt.Sprintf("Invalid parameter: (%s) (%s)", s, p))
+  }
+
+  path, err := callSystemd(SYSTEMD_UNIT_GET, s)
+
+  if err != nil {
+    log.Println(err)
+    return STR_EMPTY, err
+  }
+
+  log.Println(path)
+
+  conn, err := dbus.ConnectSystemBus()
+
+  if err != nil {
+    log.Println(err)
+    return STR_EMPTY, err
+  }
+
+  obj := conn.Object(DBUS_SYSTEMD, dbus.ObjectPath(path))
+
+  if obj != nil {
+    
+    v, err := obj.GetProperty(p)
+
+    if err != nil {
+      log.Println(err)
+      return STR_EMPTY, err
+    }
+
+    log.Println(v)
+
+  } else {
+    log.Println("Unable to find obj: ", path)
+  }
+
+  return "", nil
+
+} // getUnitProperty

@@ -25,6 +25,7 @@ const (
   DBUS_MANAGER          = "Manager"
   DBUS_SYSTEMD          = "org.freedesktop.systemd1"
   DBUS_SYSTEMD_MANAGER  = "org.freedesktop.systemd1.Manager"
+	DBUS_SYSTEMD_UNIT  		= "org.freedesktop.systemd1.Unit"
   DBUS_SYSTEMD_PATH     = "/org/freedesktop/systemd1"
 )
 
@@ -37,7 +38,15 @@ const (
   SYSTEMD_UNIT_RESTART  = "RestartUnit"
 	SYSTEMD_UNIT_START    = "StartUnit"
 	SYSTEMD_UNIT_STOP     = "StopUnit"
+	SYSTEMD_UNIT_GET      = "GetUnit"
+)
+
+const (
   SYSTEMD_UNIT_MODE_REPLACE     = "replace"
+)
+
+const (
+	PROPERTY_ACTIVESTATE 	= "ActiveState"
 )
 
 const (
@@ -57,7 +66,8 @@ const (
 )
 
 const (
-	CH_SPACE							= " "
+	STR_SPACE							= " "
+	STR_EMPTY             = ""
 )
 
 const (
