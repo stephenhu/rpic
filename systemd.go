@@ -12,8 +12,8 @@ import (
 )
 
 
-func methodName(s string, m string) string {
-  return fmt.Sprintf("%s.%s.%s", s, DBUS_MANAGER, m)
+func methodName(s string, i string, m string) string {
+  return fmt.Sprintf("%s.%s.%s", s, i, m)
 } // methodName
 
 
@@ -79,7 +79,7 @@ func callLogin(m string) error {
 
   case power:
   
-    err := obj.CallWithContext(ctx, methodName(DBUS_LOGIN,
+    err := obj.CallWithContext(ctx, methodName(DBUS_LOGIN, DBUS_SYSTEMD_MANAGER,
       LOGIN_POWEROFF), 0, false).Store(&out)
 
     if err != nil {
@@ -91,7 +91,7 @@ func callLogin(m string) error {
 
   case reboot:
 
-    err := obj.CallWithContext(ctx, methodName(DBUS_LOGIN,
+    err := obj.CallWithContext(ctx, methodName(DBUS_LOGIN, DBUS_SYSTEMD_MANAGER,
       LOGIN_REBOOT), 0, false).Store(&out)
 
     if err != nil {
@@ -134,7 +134,6 @@ func callSystemd(m string, s string) (string, error) {
   restart   := strings.ToLower(SYSTEMD_UNIT_RESTART)
   start     := strings.ToLower(SYSTEMD_UNIT_START)
   stop      := strings.ToLower(SYSTEMD_UNIT_STOP)
-  get       := strings.ToLower(SYSTEMD_UNIT_GET)
 
   ctx, cancel := context.WithTimeout(context.Background(),
   MAX_TIMEOUT * time.Second)
@@ -144,7 +143,7 @@ func callSystemd(m string, s string) (string, error) {
   switch(method) {
   case restart:
 
-    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD,
+    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD, DBUS_SYSTEMD_MANAGER,
       SYSTEMD_UNIT_RESTART), 0, s, SYSTEMD_UNIT_MODE_REPLACE).Store(&out)
 
     if err != nil {
@@ -154,7 +153,7 @@ func callSystemd(m string, s string) (string, error) {
 
   case start:
 
-    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD,
+    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD, DBUS_SYSTEMD_MANAGER,
       SYSTEMD_UNIT_START), 0, s, SYSTEMD_UNIT_MODE_REPLACE).Store(&out)
 
     if err != nil {
@@ -164,25 +163,12 @@ func callSystemd(m string, s string) (string, error) {
 
   case stop:
 
-    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD,
+    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD, DBUS_SYSTEMD_MANAGER,
       SYSTEMD_UNIT_STOP), 0, s, SYSTEMD_UNIT_MODE_REPLACE).Store(&out)
 
     if err != nil {
       log.Println(err)
       return STR_EMPTY, err
-    }
-
-  case get:
-
-    err := obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD,
-      SYSTEMD_UNIT_GET), 0, s).Store(&out)
-
-
-    if err != nil {
-      log.Println(err)
-      return STR_EMPTY, err
-    } else {
-      return out, nil
     }
 
   default:
@@ -229,6 +215,25 @@ func getUnitProperty(s string, p string) (string, error) {
     }
 
     log.Println(v)
+
+    ctx, cancel := context.WithTimeout(context.Background(),
+      MAX_TIMEOUT * time.Second)
+
+      defer cancel()
+      
+    var out string
+
+    err = obj.CallWithContext(ctx, methodName(DBUS_SYSTEMD, DBUS_SYSTEMD_UNIT,
+      SYSTEMD_UNIT_GET), 0, p).Store(&out)
+
+    if err != nil {
+      log.Println(err)
+      return STR_EMPTY, err
+    }
+
+    log.Println(out)
+
+    return out, nil
 
   } else {
     log.Println("Unable to find obj: ", path)

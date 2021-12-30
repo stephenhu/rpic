@@ -18,7 +18,7 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 
-		out, err := callSystemd(SYSTEMD_UNIT_GET, SERVICE_WIREGUARD)
+		out, err := getUnitProperty(SERVICE_WIREGUARD, PROPERTY_ACTIVESTATE)
 
 		if err != nil {
 			log.Println(err)
