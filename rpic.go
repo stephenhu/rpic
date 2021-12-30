@@ -23,10 +23,13 @@ const (
   DBUS_LOGIN_MANAGER    = "org.freedesktop.login1.Manager"
   DBUS_LOGIN_PATH       = "/org/freedesktop/login1"
   DBUS_MANAGER          = "Manager"
+  DBUS_PROPERTIES_GET   = "org.freedesktop.DBus.Properties.Get"
+  DBUS_PROPERTIES_GETALL   = "org.freedesktop.DBus.Properties.GetAll"
   DBUS_SYSTEMD          = "org.freedesktop.systemd1"
   DBUS_SYSTEMD_MANAGER  = "org.freedesktop.systemd1.Manager"
 	DBUS_SYSTEMD_UNIT  		= "org.freedesktop.systemd1.Unit"
   DBUS_SYSTEMD_PATH     = "/org/freedesktop/systemd1"
+  DBUS_UNIT             = "Unit"
 )
 
 const (
@@ -39,6 +42,7 @@ const (
 	SYSTEMD_UNIT_START    = "StartUnit"
 	SYSTEMD_UNIT_STOP     = "StopUnit"
 	SYSTEMD_UNIT_GET      = "GetUnit"
+  SYSTEMD_GET           = "Get"
 )
 
 const (
@@ -47,6 +51,14 @@ const (
 
 const (
 	PROPERTY_ACTIVESTATE 	= "ActiveState"
+)
+
+const (
+  UNIT_STATE_ACTIVATING = "activating"
+  UNIT_STATE_ACTIVE     = "active"
+  UNIT_STATE_FAILED     = "failed"
+  UNIT_STATE_INACTIVE   = "inactive"
+  UNIT_STATE_RELOADING  = "reloading"
 )
 
 const (

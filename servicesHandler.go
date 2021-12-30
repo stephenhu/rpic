@@ -1,6 +1,7 @@
 package main
 
 import (
+  "encoding/json"
 	"log"
 	"net/http"
 	"strings"
@@ -18,15 +19,25 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 
+    // TODO: check service name
+
 		out, err := getUnitProperty(SERVICE_WIREGUARD, PROPERTY_ACTIVESTATE)
 
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
-		}
+		} else {
 
-		log.Println(out)
+      j, err := json.Marshal(Property{Active: out,})
 
+      if err != nil {
+        log.Println(err)
+      } else {
+        w.Write(j)
+      }
+
+   }
+    
 	case http.MethodPut:
 
 		if !checkParam(name) {
