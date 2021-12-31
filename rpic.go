@@ -80,9 +80,16 @@ const (
 const (
 	STR_SPACE							= " "
 	STR_EMPTY             = ""
+  STR_PERIOD            = "."
 )
 
 const (
   MAX_TIMEOUT           = 5
+)
+
+const (
+  INDEX_PAGE            = "index"
+  WEB_ASSETS            = "/assets/"
+  ROOT_DIR              = "www"
 )
 

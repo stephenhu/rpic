@@ -12,6 +12,11 @@ func initRouter() *mux.Router {
 
 	router := mux.NewRouter()
 
+  router.PathPrefix(WEB_ASSETS).Handler(http.StripPrefix(WEB_ASSETS,
+		http.FileServer(http.Dir("./www"))))
+
+  router.HandleFunc("/", pageHandler)
+
 	router.HandleFunc("/api/services", servicesHandler)
 	router.HandleFunc("/api/services/{name:[0-9a-z]+}", servicesHandler)
 	router.HandleFunc("/api/systems", systemHandler)
