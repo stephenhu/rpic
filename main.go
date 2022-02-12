@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -13,8 +14,8 @@ func initRouter() *mux.Router {
 	router := mux.NewRouter()
 
   router.PathPrefix(WEB_ASSETS).Handler(http.StripPrefix(WEB_ASSETS,
-		http.FileServer(http.Dir("./www"))))
-
+		http.FileServer(http.Dir(fmt.Sprintf("%s%s", PWD, ROOT_DIR)))))
+		
   router.HandleFunc("/", pageHandler)
 
 	router.HandleFunc("/api/services", servicesHandler)

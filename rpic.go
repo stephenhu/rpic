@@ -13,12 +13,6 @@ const (
 )
 
 const (
-	ACTION_REBOOT    	    = "reboot"
-	ACTION_SHUTDOWN		    = "shutdown"
-	ACTION_SUSPEND   	    = "suspend"
-)
-
-const (
   DBUS_LOGIN            = "org.freedesktop.login1"
   DBUS_LOGIN_MANAGER    = "org.freedesktop.login1.Manager"
   DBUS_LOGIN_PATH       = "/org/freedesktop/login1"
@@ -88,8 +82,10 @@ const (
 )
 
 const (
+  FORWARD_SLASH         = "/"
   INDEX_PAGE            = "index"
-  WEB_ASSETS            = "/assets/"
+  PWD                   = "."
   ROOT_DIR              = "www"
+  WEB_ASSETS            = "/assets/"
 )
 
