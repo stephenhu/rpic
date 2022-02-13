@@ -8,6 +8,12 @@ const (
 )
 
 const (
+  DEFAULT_DATABASE            = "./db/rpic.db"
+  DEFAULT_DATABASE_DRIVER     = "sqlite3"
+)
+
+
+const (
 	PARAM_NAME          	= "name"
 	PARAM_METHOD				  = "method"
 )
@@ -91,3 +97,35 @@ const (
   WEB_ASSETS            = "/assets/"
 )
 
+
+const (
+  PARAM_USER            = "user"
+  PARAM_PASS            = "pass"
+)
+
+
+const (
+  BLOCK_KEY             = "0123456789654321"
+  HASH_LENGTH           = 32
+  HMAC_KEY              = "i love raspberry pi"
+  IV                    = "raspberry pi is the best"
+  SALT                  = "random words in a row"
+  SALT2                 = "abcdefghijkm"
+  TOKEN_LENGTH          = 48
+)
+
+
+const (
+  
+  ERR_DATABASE_CONNECTION =
+    "Unable to connect to database"
+  ERR_DATABASE_NOT_INITIALIZED =
+    "Database has not been initialized"
+  ERR_EMPTY_USER_NAME =
+    "User query cannot search for an empty name"
+  ERR_EMPTY_USER_TOKEN =
+    "User query cannot search for an empty token"
+  ERR_USER_INVALID =
+    "Inavlid user"
+
+)

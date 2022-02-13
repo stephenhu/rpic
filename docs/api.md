@@ -36,3 +36,10 @@ url | parameters | description
 ---|---|---
 `GET /api/backups` | |
 `POST /api/backups` | |
+
+## auth
+
+url | description | parameter(s)
+---|---|---
+`DELETE /auth` | |
+`POST /auth` | |

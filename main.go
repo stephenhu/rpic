@@ -1,20 +1,52 @@
 package main
 
 import (
-	"fmt"
+	"database/sql"
+	"flag"
+	//"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
 
 
+var data *sql.DB
+
+
+var (
+	database		= flag.String("database", DEFAULT_DATABASE, "database file path")
+)
+
+
+func connectDatabase() {
+
+	_, err := os.Stat(*database)
+
+	if err != nil || os.IsNotExist(err) {
+		
+		log.Println(err)
+		log.Fatal(ERR_DATABASE_NOT_INITIALIZED)
+
+		// automatically initialize database?
+	}
+
+	data, err = sql.Open(DEFAULT_DATABASE_DRIVER, *database)
+
+	if err != nil {
+
+		log.Println(err)
+		log.Fatal(ERR_DATABASE_CONNECTION)
+
+	}
+	
+} // connectDatabase
+
+
 func initRouter() *mux.Router {
 
 	router := mux.NewRouter()
-
-  router.PathPrefix(ROOT_DIR).Handler(http.StripPrefix(ROOT_DIR,
-		http.FileServer(http.Dir(fmt.Sprintf("%s%s/*", PWD, ROOT_DIR)))))
 
 	router.PathPrefix(CSS_DIR).Handler(http.FileServer(
 		http.Dir(ROOT_DIR)))
@@ -23,6 +55,8 @@ func initRouter() *mux.Router {
 		http.Dir(ROOT_DIR)))
 		
   router.HandleFunc("/", pageHandler)
+
+	router.HandleFunc("/auth", authHandler)
 
 	router.HandleFunc("/api/services", servicesHandler)
 	router.HandleFunc("/api/services/{name:[0-9a-z]+}", servicesHandler)
@@ -35,6 +69,10 @@ func initRouter() *mux.Router {
 
 
 func main() {
+
+	flag.Parse()
+
+	connectDatabase()
 
 	router := initRouter()
 

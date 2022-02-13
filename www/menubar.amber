@@ -6,5 +6,5 @@
         a.nav-link[href="#"]
           span.fa.fa-home
       li.nav-item
-        a.nav-link[href="#"]
+        a.nav-link[onclick="logout(); return false;"]
           span.fa.fa-sign-out
