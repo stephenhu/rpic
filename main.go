@@ -13,8 +13,14 @@ func initRouter() *mux.Router {
 
 	router := mux.NewRouter()
 
-  router.PathPrefix(WEB_ASSETS).Handler(http.StripPrefix(WEB_ASSETS,
-		http.FileServer(http.Dir(fmt.Sprintf("%s%s", PWD, ROOT_DIR)))))
+  router.PathPrefix(ROOT_DIR).Handler(http.StripPrefix(ROOT_DIR,
+		http.FileServer(http.Dir(fmt.Sprintf("%s%s/*", PWD, ROOT_DIR)))))
+
+	router.PathPrefix(CSS_DIR).Handler(http.FileServer(
+		http.Dir(ROOT_DIR)))
+
+	router.PathPrefix(JS_DIR).Handler(http.FileServer(
+		http.Dir(ROOT_DIR)))
 		
   router.HandleFunc("/", pageHandler)
 

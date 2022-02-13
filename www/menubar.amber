@@ -1,0 +1,10 @@
+ nav.navbar.navbar-dark.fixed-bottom.mt-5[id="pageMenu"]
+  div.container-fluid
+    a.navbar-brand[href="#"] Pi Controller
+    ul.nav
+      li.nav-item.active
+        a.nav-link[href="#"]
+          span.fa.fa-home
+      li.nav-item
+        a.nav-link[href="#"]
+          span.fa.fa-sign-out

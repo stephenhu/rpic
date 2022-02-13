@@ -82,8 +82,10 @@ const (
 )
 
 const (
+  CSS_DIR               = "/css"
   FORWARD_SLASH         = "/"
   INDEX_PAGE            = "index"
+  JS_DIR                = "/js"
   PWD                   = "."
   ROOT_DIR              = "www"
   WEB_ASSETS            = "/assets/"

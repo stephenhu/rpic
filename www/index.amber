@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  import login
+  import home
+  import menubar

@@ -28,8 +28,6 @@ func pageHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		file := fmt.Sprintf("%s/%s.amber", ROOT_DIR, entry)
-
-		log.Println(file)
 			
 		err := compiler.ParseFile(file)
 	

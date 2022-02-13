@@ -1,0 +1,10 @@
+div.container.d-block[id="login"]
+  h1.display-1.mb-3 Login
+  div.row
+    div.col-lg-4
+      div.mb-3
+        input.form-control[id="userId"][type="username"][placeholder="user name"]
+      div.mb-3
+        input.form-control[id="passId"][type="password"][placeholder="password"]
+      div.mb-3
+        button.btn.btn-primary[onclick="login(); return false;"] Login
