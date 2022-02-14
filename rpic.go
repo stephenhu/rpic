@@ -8,7 +8,7 @@ const (
 )
 
 const (
-  DEFAULT_DATABASE            = "./db/rpic.db"
+  DEFAULT_DATABASE            = "./rpic.db"
   DEFAULT_DATABASE_DRIVER     = "sqlite3"
 )
 
