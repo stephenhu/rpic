@@ -2,7 +2,7 @@ div.container-fluid.mt-5.d-block[id="home"]
   div.row
     div.col-sm-6
       div.card
-        div.card-header.bg-info.text-white Device
+        div.card-header.bg-primary.text-white Device
         div.card-body
           h5.card-title.text-dark.mb-3 System
           button.btn.btn-outline-success.me-3[onclick="shutdown(); return false;"] Power off
@@ -13,7 +13,7 @@ div.container-fluid.mt-5.d-block[id="home"]
             small.text-muted Uptime 5d, Linux kernel 4.10.3, amd64
     div.col-sm-6
       div.card
-        div.card-header.bg-info.text-white VPN
+        div.card-header.bg-primary.text-white VPN
         div.card-body
           h5.card-title.text-dark.mb-3 Wireguard
           button.btn.btn-outline-danger.me-3[onclick="shutdown(); return false;"] Stop

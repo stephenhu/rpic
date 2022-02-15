@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
 	"github.com/gorilla/mux"
 )
 
