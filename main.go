@@ -75,6 +75,8 @@ func main() {
 
 	connectDatabase()
 
+	checkAdmin()
+
 	router := initRouter()
 
 	address := addr()

@@ -2,6 +2,8 @@ package main
 
 const (
 	APP_ADDRESS     			= "0.0.0.0"
+  APP_ADMIN             = "admin"
+  APP_ADMIN_PASSWORD    = "rooster2#"
 	APP_NAME							= "rpic"
 	APP_PORT        			= "9008"
 	APP_VERSION						= "1.0"
@@ -108,7 +110,7 @@ const (
   BLOCK_KEY             = "0123456789654321"
   HASH_LENGTH           = 32
   HMAC_KEY              = "i love raspberry pi"
-  IV                    = "raspberry pi is the best"
+  IV                    = "abcdef ghijklmno"
   SALT                  = "random words in a row"
   SALT2                 = "abcdefghijkm"
   TOKEN_LENGTH          = 48
@@ -125,7 +127,12 @@ const (
     "User query cannot search for an empty name"
   ERR_EMPTY_USER_TOKEN =
     "User query cannot search for an empty token"
+  ERR_INVALID_USER_NAME =
+    "Invalid user name"  
   ERR_USER_INVALID =
     "Inavlid user"
-
+  ERR_INVALID_PASSWORD =
+    "Invalid password"
+  ERR_USER_ADMIN_NOT_EXIST =
+    "admin user does not exist"
 )

@@ -1,4 +1,4 @@
-div.container-fluid.mt-5.d-block[id="home"]
+div.container-fluid.mt-5.d-none[id="home"]
   div.row
     div.col-sm-6
       div.card

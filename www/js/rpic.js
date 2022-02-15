@@ -13,6 +13,31 @@ const HTTP_DELETE         = "delete";
 const HTTP_GET            = "get";
 const HTTP_PUT            = "put";
 
+const HTTP_401            = 401;
+
+const ERR_LOGIN_FAILED    =
+  "Login credentials are invalid";
+
+const DBLOCK              = "d-block";
+const DNONE               = "d-none";
+
+const PAGE_HOME           = "home";
+const PAGE_LOGIN          = "login";
+
+
+function togglePage(s, h) {
+
+  var show = document.getElementById(s);
+  var hide = document.getElementById(h);
+
+  show.classList.remove(DNONE);
+  show.classList.add(DBLOCK);
+
+  hide.classList.remove(DBLOCK);
+  hide.classList.add(DNONE);  
+
+} // togglePage
+
 
 function login() {
   
@@ -29,14 +54,24 @@ function login() {
     body: data
   })
   .then((response) => {
-    if(response.ok) return response.json();
-  })
-  .then((data) => {
-    console.log(data.length);
+    
+    console.log(response);
+    if(!response.ok) {
+
+      if(response.status === HTTP_401) {
+        alert(ERR_LOGIN_FAILED);
+      }
+      
+    } else {
+      togglePage(PAGE_HOME, PAGE_LOGIN);
+    }
 
   })
+  .then((data) => {
+    console.log(data);
+  })
   .catch((error) => {
-    console.log(error);
+    alert(ERR_LOGIN_FAILED);
   })
 
 } // login
@@ -48,10 +83,12 @@ function logout() {
     method: HTTP_DELETE,
   })
   .then((response) => {
-    if(response.ok) return response.json();
+    console.log(response);
+    if(response.ok) {
+      
+    }
   })
   .then((data) => {
-    console.log(data.length);
 
   })
   .catch((error) => {

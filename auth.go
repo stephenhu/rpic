@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -10,12 +11,12 @@ import (
 
 
 type User struct {
-	ID					string				`json:"id"`
-	Name      	string				`json:"name"`
-	Hash        string        `json:"hash"`
-	Token      	string				`json:"token"`
-	Created   	string				`json:"created"`
-  Updated   	string				`json:"updated"`	
+	ID					string								`json:"id"`
+	Name      	string								`json:"name"`
+	Hash        string        				`json:"hash"`
+	Token      	sql.NullString				`json:"token"`
+	Created   	string								`json:"created"`
+  Updated   	string								`json:"updated"`	
 }
 
 
@@ -41,7 +42,7 @@ func checkToken(c *http.Cookie) *User {
 			user := User{}
 	
 			err := json.Unmarshal(clearBuf, &user)
-	
+
 			if err != nil {
 				
 				log.Println(err)
@@ -49,14 +50,20 @@ func checkToken(c *http.Cookie) *User {
 	
 			} else {
 	
-				u := getUserByToken(user.Token)
+				if user.Token.Valid {
+
+					u := getUserByToken(user.Token.String)
+
+					if u == nil {
+						return nil
+					} else {
+						return u
+					}
 	
-				if u == nil {
-					return nil
 				} else {
-					return u
+					return nil
 				}
-	
+
 			}
 	
 		}
@@ -110,8 +117,7 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 
 		cookie := &http.Cookie{
 			Name: APP_NAME,
-			Value: "",
-			Domain: APP_ADDRESS,
+			Value: STR_EMPTY,
 			Path: FORWARD_SLASH,
 			MaxAge: -1,
 		}
@@ -149,6 +155,9 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 
 			if token != STR_EMPTY {
 
+				u.Token.String = token
+				u.Token.Valid  = true
+
 				j, err := json.Marshal(u)
 
 				if err != nil {
@@ -167,11 +176,10 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 						cookie := &http.Cookie{
 							Name: APP_NAME,
 							Value: encData,
-							Domain: APP_ADDRESS,
 							Path: FORWARD_SLASH,
 						}
 		
-						http.SetCookie(w, cookie)		
+						http.SetCookie(w, cookie)
 			
 					}
 

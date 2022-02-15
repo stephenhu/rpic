@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"log"
 
 	"github.com/stephenhu/webtools"
@@ -12,16 +13,19 @@ const (
 
 	GET_USER_BY_NAME = "SELECT " +
 	  "id, name, hash, token, created, updated " +
-		"FROM users" +
+		"FROM users " +
 		"WHERE name=?"
 	
 	GET_USER_BY_TOKEN = "SELECT " +
 	  "id, name, hash, token, created, updated " +
-		"FROM users" +
+		"FROM users " +
 		"WHERE token=?"
 
+	ADD_USER = "INSERT into users(name, hash) " +
+	  "VALUES(?, ?)"
+
 	UPDATE_TOKEN = "UPDATE users " +
-	  "SET token=?, SET updated=CURRENT_TIMESTAMP " +
+	  "SET token=?, updated=CURRENT_TIMESTAMP " +
 		"WHERE id=?"
 	
 	DELETE_TOKEN = "UPDATE users " +
@@ -101,7 +105,8 @@ func getUserByName(name string) *User {
 
 		u := User{}
 
-		err := row.Scan(&u.ID, &u.Name, &u.Hash, &u.Token, &u.Created, &u.Updated)
+		err := row.Scan(&u.ID, &u.Name, &u.Hash, &u.Token,
+			&u.Created, &u.Updated)
 
 		if err != nil || err == sql.ErrNoRows {
 			
@@ -146,3 +151,39 @@ func getUserByToken(token string) *User {
 	}
 
 } // getUserByToken
+
+
+func addUser(name string, pass string) error {
+
+	if name == STR_EMPTY {
+		return errors.New(ERR_INVALID_USER_NAME)
+	}
+
+	if pass == STR_EMPTY {
+		return errors.New(ERR_INVALID_PASSWORD)
+	}
+
+	hash, err := webtools.GenerateHash(pass, SALT, HMAC_KEY,
+		SALT2, HASH_LENGTH)
+
+	if err != nil {
+
+		log.Println(err)
+		return err
+
+		} else {
+
+		_, err := data.Exec(
+			ADD_USER, name, hash,
+		)
+	
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+	
+		return nil
+	
+	}
+
+} // addUser

@@ -1,4 +1,4 @@
-div.container-fluid.d-none[id="login"]
+div.container-fluid.d-block[id="login"]
   h1.display-1.mb-3 Login
   div.row
     div.col-lg-4
