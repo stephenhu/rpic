@@ -110,6 +110,11 @@ func authenticate(name string, pass string) *User {
 } // authenticate
 
 
+func isAuthed() {
+
+}
+
+
 func authHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
