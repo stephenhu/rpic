@@ -61,7 +61,8 @@ func initRouter() *mux.Router {
 
 	router.HandleFunc("/api/services", servicesHandler)
 	router.HandleFunc("/api/services/{name:[0-9a-z]+}", servicesHandler)
-	router.HandleFunc("/api/systems", systemHandler)
+	router.HandleFunc("/api/systems", systemsHandler)
+	router.HandleFunc("/api/users", usersHandler)
 	router.HandleFunc("/api/version", versionHandler)
 
 	return router

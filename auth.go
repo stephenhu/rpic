@@ -1,23 +1,12 @@
 package main
 
 import (
-	"database/sql"
 	"encoding/json"
 	"log"
 	"net/http"
 
 	"github.com/stephenhu/webtools"
 )
-
-
-type User struct {
-	ID					string								`json:"id"`
-	Name      	string								`json:"name"`
-	Hash        string        				`json:"hash"`
-	Token      	sql.NullString				`json:"token"`
-	Created   	string								`json:"created"`
-  Updated   	string								`json:"updated"`	
-}
 
 
 func checkToken(c *http.Cookie) *User {
@@ -110,9 +99,24 @@ func authenticate(name string, pass string) *User {
 } // authenticate
 
 
-func isAuthed() {
+func authenticated(r *http.Request) *User {
 
-}
+	if r == nil {
+		return nil
+	}
+
+	cookie, err := r.Cookie(APP_NAME)
+
+	if err != nil {
+		
+		log.Println(err)
+		return nil
+
+	}
+
+	return checkToken(cookie)
+
+} // authenticated
 
 
 func authHandler(w http.ResponseWriter, r *http.Request) {
@@ -129,20 +133,11 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 
 		http.SetCookie(w, cookie)
 
-		c, err := r.Cookie(APP_NAME)
-		
-		if err != nil {
-			log.Println(err)
-		} else {
+		u := authenticated(r)
 
-			u := checkToken(c)
-
-			if u != nil {
-				deleteToken(u)
-			}
-	
+		if u != nil {
+			deleteToken(u)
 		}
-
 
 	case http.MethodGet:
   case http.MethodPut:

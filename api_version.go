@@ -39,4 +39,4 @@ func versionHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
 
-} // systemHandler
+} // versionHandler

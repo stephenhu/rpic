@@ -4,3 +4,5 @@ block content
   import login
   import home
   import menubar
+  script
+    checkState();

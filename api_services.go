@@ -16,68 +16,75 @@ func servicesHandler(w http.ResponseWriter, r *http.Request) {
 
 	name := vars[PARAM_NAME]
 
-	switch r.Method {
-	case http.MethodGet:
+	u := authenticated(r)
 
-    // TODO: check service name
+	if u == nil {
+		w.WriteHeader(http.StatusUnauthorized)
+	} else {
 
-		out, err := getUnitProperty(SERVICE_WIREGUARD, PROPERTY_ACTIVESTATE)
+		switch r.Method {
+		case http.MethodGet:
 
-		if err != nil {
-			log.Println(err)
-			w.WriteHeader(http.StatusInternalServerError)
-		} else {
+			// TODO: check service name
 
-      j, err := json.Marshal(Property{Active: out,})
+			out, err := getUnitProperty(SERVICE_WIREGUARD, PROPERTY_ACTIVESTATE)
 
-      if err != nil {
-        log.Println(err)
-      } else {
-        w.Write(j)
-      }
+			if err != nil {
+				log.Println(err)
+				w.WriteHeader(http.StatusInternalServerError)
+			} else {
 
-   }
-    
-	case http.MethodPut:
+				j, err := json.Marshal(Property{Active: out,})
 
-		if !checkParam(name) {
-			w.WriteHeader(http.StatusBadRequest)
-		} else {
+				if err != nil {
+					log.Println(err)
+				} else {
+					w.Write(j)
+				}
 
-			// TODO: add sqlite3 to store services
-			if strings.ToLower(name) == WIREGUARD {
+			}
+			
+		case http.MethodPut:
 
-        method := r.FormValue(PARAM_METHOD)
+			if !checkParam(name) {
+				w.WriteHeader(http.StatusBadRequest)
+			} else {
 
-        if checkSystemdMethod(method) {
-        
-				  _, err := callSystemd(method, SERVICE_WIREGUARD)
+				// TODO: add sqlite3 to store services
+				if strings.ToLower(name) == WIREGUARD {
 
-				  if err != nil {
-						
-				    log.Println(err)
-				    w.WriteHeader(http.StatusInternalServerError)
+					method := r.FormValue(PARAM_METHOD)
 
-          }
+					if checkSystemdMethod(method) {
+					
+						_, err := callSystemd(method, SERVICE_WIREGUARD)
 
-        } else {
+						if err != nil {
+							
+							log.Println(err)
+							w.WriteHeader(http.StatusInternalServerError)
 
-          log.Println("Invalid systemd method")
-          w.WriteHeader(http.StatusBadRequest)
+						}
+
+					} else {
+
+						log.Println("Invalid systemd method")
+						w.WriteHeader(http.StatusBadRequest)
+
+					}
 
 				}
 
 			}
 
+		case http.MethodPost:
+
+			// TODO: add service, need to consider security
+
+		default:
+			w.WriteHeader(http.StatusMethodNotAllowed)
 		}
 
-	case http.MethodPost:
-
-		// TODO: add service, need to consider security
-
-	default:
-		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
 
 } // servicesHandler
-
