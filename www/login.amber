@@ -1,4 +1,4 @@
-div.container-fluid.d-none[id="login"]
+div.container-fluid.h-100.d-none[id="login"]
   h1.display-1.mb-3.mt-3 Login
     small.text-muted Pi Controller
   div.row
@@ -8,4 +8,4 @@ div.container-fluid.d-none[id="login"]
       div.mb-3
         input.form-control[id="pass"][type="password"][placeholder="password"]
       div.mb-3
-        button.btn.btn-primary[onclick="signin(); return false;"] Login
+        button.btn.btn-primary[onclick="login(); return false;"] Login

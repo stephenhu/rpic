@@ -163,7 +163,7 @@ function checkAuth() {
 } // checkAuth
 
 
-function signin() {
+function login() {
   
   var user = document.getElementById(ID_USER);
   var pass = document.getElementById(ID_PASS);
@@ -180,41 +180,41 @@ function signin() {
   .then((response) => {
     
     console.log(response);
-    if(!response.ok) {
+    if(response.status === HTTP_401) {
+      alert(ERR_LOGIN_FAILED);
+    } else if(response.status === HTTP_200) {
 
-      if(response.status === HTTP_401) {
-        alert(ERR_LOGIN_FAILED);
-      }
-      
+      hashtagListener();
+
     } else {
-      toggleView(VIEW_MAIN, VIEW_LOGIN);
+      console.log("Unknown API response code " + response.status);
     }
 
   })
   .then((data) => {
-    console.log(data);
   })
   .catch((error) => {
     alert(ERR_LOGIN_FAILED);
   })
 
-} // signin
+} // login
 
 
-function signout() {
+function logout() {
 
   fetch(`${API_AUTH}`, {
     method: HTTP_DELETE,
   })
   .then((response) => {
-    console.log(response);
-    if(response.ok) {
-      
-      if(response.status === HTTP_200) {
-        toggleView(VIEW_LOGIN, VIEW_MAIN);
-      }
+    
+    if(response.status === HTTP_200) {
+
+      hideView(VIEW_MAIN, DBLOCK);
+      hideView(VIEW_SIDEBAR, DBLOCK);
+      showView(VIEW_LOGIN, DBLOCK);
 
     }
+
   })
   .then((data) => {
 
@@ -223,7 +223,7 @@ function signout() {
     console.log(error);
   })
 
-} // signout
+} // logout
 
 
 function reboot() {
@@ -291,12 +291,17 @@ function hashtagListener() {
     
     hideView(VIEW_LOGIN, DBLOCK);
     showView(VIEW_APP, DFLEX);
+    showView(VIEW_SIDEBAR, DBLOCK);
+    showView(VIEW_MAIN, DBLOCK);
     
     showFromList(VIEW_MAIN, VIEW_DASHBOARD, DBLOCK);
 
   } else {
 
+    hideView(VIEW_LOGIN, DBLOCK);
     showView(VIEW_APP, DFLEX);
+    showView(VIEW_SIDEBAR, DBLOCK);
+    showView(VIEW_MAIN, DBLOCK);
 
     showFromList(VIEW_MAIN, hash, DBLOCK);
 

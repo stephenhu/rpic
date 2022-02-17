@@ -19,19 +19,19 @@ div.d-none.h-100.bg-dark[id="app"]
       span.fa.fa-file.fa-fw
       span.navbar-text.ms-2 Logs
     hr.text-primary
-    a.nav-link[href="shutdown(); return false;"]
-      span.fa.fa-power-off.fa-fw
-      span.navbar-text.ms-2 Power off
-    a.nav-link[href="reboot(); return false;"]
-      span.fa.fa-rotate-right.fa-fw
-      span.navbar-text.ms-2 Reboot
-    a.nav-link[href="signout(); return false;"]
-      span.fa.fa-sign-out.fa-fw
-      span.navbar-text.ms-2 Sign out
-    hr.text-primary
     a.nav-link[href="#wireguard"]
       span.fa.fa-cube.fa-fw
       span.navbar-text.ms-2 Wireguard
+    hr.text-primary
+    a.nav-link[href="javascript:shutdown();"]
+      span.fa.fa-power-off.fa-fw
+      span.navbar-text.ms-2 Power off
+    a.nav-link[href="javascript:reboot();"]
+      span.fa.fa-rotate-right.fa-fw
+      span.navbar-text.ms-2 Reboot
+    a.nav-link[href="javascript:logout();"]
+      span.fa.fa-sign-out.fa-fw
+      span.navbar-text.ms-2 Sign out
   div.flex-column.w-100[id="main"]
     import dashboard
     import network
