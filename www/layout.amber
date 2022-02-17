@@ -6,5 +6,11 @@ html[lang="en"]
     link[rel="stylesheet"][href="/css/rpic.css"]
     script[src="https://use.fontawesome.com/9dc065bafc.js"]
     script[src="/js/rpic.js"]
-  body
+    script[src="/js/aiko.js"]
+  body[onload="checkAuth(); return false;"]
     block content
+    script
+      let p = new Page({
+        "master": ["login", "windowApp", "dashboard", "network", "system", "services", "logs", "wireguard"],
+      });
+      

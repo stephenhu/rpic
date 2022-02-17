@@ -1,0 +1,13 @@
+div.container-fluid.d-none[id="wireguard"]
+  h1.display-2.mt-1.mb-3 Wireguard
+  div.btn-toolbar.mt-2
+    div.btn-group.btn-group-sm
+      button.btn.btn-outline-primary.btn-sm.me-2
+        span.fa.fa-play.me-2
+        span.navbar-text Start
+      button.btn.btn-outline-danger.btn-sm.me-2
+        span.fa.fa-stop.me-2
+        span.navbar-text Stop
+      button.btn.btn-outline-warning.btn-sm.me-2
+        span.fa.fa-rotate-right.me-2
+        span.navbar-text Restart

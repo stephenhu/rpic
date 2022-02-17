@@ -1,0 +1,2 @@
+div.d-none[id="dashboard"]
+  h1.display-1.text-light.mt-1.ms-5 Uptime 3d

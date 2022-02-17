@@ -1,10 +1,10 @@
  nav.navbar.navbar-dark.fixed-bottom.mt-5[id="pageMenu"]
   div.container-fluid
-    a.navbar-brand[href="#"] Pi Controller
+    a.navbar-brand[href="https://rpic.github.io"]
+      span.fa.fa-lock
+      span.navbar-text.ms-2 Pi Controller
+      small.small.text-muted[id="version"] v0.1
     ul.nav
-      li.nav-item.active
-        a.nav-link[href="#"]
-          span.fa.fa-home
       li.nav-item
-        a.nav-link[onclick="logout(); return false;"]
+        a.nav-link[onclick="signout(); return false;"][href=""]
           span.fa.fa-sign-out

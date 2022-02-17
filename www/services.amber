@@ -1,0 +1,18 @@
+div.container-fluid.d-none.ms-2.me-2[id="services"]
+  h1.display-1.mt-1 Services
+  div.row.mt-5
+    div.col-lg-4
+      a.card[href="#wireguard"]
+        div.card-body
+          h3.card-title.text-dark Wireguard
+          p.card-text.text-dark.text-muted Fast, modern, secure VPN Tunnel
+    div.col-lg-4
+      a.card[href="#redis"]
+        div.card-body
+          h3.card-title.text-dark Redis
+          p.card-text.text-muted In-memory data structure store
+    div.col-lg-4
+      a.card[href="#postgres"]
+        div.card-body
+          h3.card-title.text-dark Postgres
+          p.card-text.text-muted Enterprise ready relational database

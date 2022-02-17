@@ -1,0 +1,42 @@
+div.d-none.h-100.bg-dark[id="app"]
+  div.flex-column.fw-220.mt-3.bg-dark[id="sidebar"]
+    a.ms-3[href="https://rpic.github.io"] Pi Controller
+      small.small.text-muted[id="version"] v0.1
+    hr.text-primary
+    a.nav-link.active[href="#"]
+      span.fa.fa-dashboard.fa-fw
+      span.navbar-text.ms-2 Dashboard
+    a.nav-link[href="#network"]
+      span.fa.fa-globe.fa-fw
+      span.navbar-text.ms-2 Network
+    a.nav-link[href="#storage"]
+      span.fa.fa-database.fa-fw
+      span.navbar-text.ms-2 Storage
+    a.nav-link[href="#services"]
+      span.fa.fa-cubes.fa-fw
+      span.navbar-text.ms-2 Services
+    a.nav-link[href="#logs"]
+      span.fa.fa-file.fa-fw
+      span.navbar-text.ms-2 Logs
+    hr.text-primary
+    a.nav-link[href="shutdown(); return false;"]
+      span.fa.fa-power-off.fa-fw
+      span.navbar-text.ms-2 Power off
+    a.nav-link[href="reboot(); return false;"]
+      span.fa.fa-rotate-right.fa-fw
+      span.navbar-text.ms-2 Reboot
+    a.nav-link[href="signout(); return false;"]
+      span.fa.fa-sign-out.fa-fw
+      span.navbar-text.ms-2 Sign out
+    hr.text-primary
+    a.nav-link[href="#wireguard"]
+      span.fa.fa-cube.fa-fw
+      span.navbar-text.ms-2 Wireguard
+  div.flex-column.w-100[id="main"]
+    import dashboard
+    import network
+    import storage
+    import services
+    import logs
+    import wireguard
+  
