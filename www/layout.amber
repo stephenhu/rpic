@@ -11,6 +11,8 @@ html[lang="en"]
     block content
     script
       let p = new Page({
-        "master": ["login", "windowApp", "dashboard", "network", "system", "services", "logs", "wireguard"],
+        "master": ["login", "app", "sidebar", "main"],
       });
+
+      console.log(p.views);
       

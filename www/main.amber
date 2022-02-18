@@ -1,7 +1,7 @@
 div.d-none.h-100.bg-dark[id="app"]
   div.flex-column.fw-220.mt-3.bg-dark[id="sidebar"]
     a.ms-3[href="https://rpic.github.io"] Pi Controller
-      small.small.text-muted[id="version"] v0.1
+    small.small.text-muted[id="version"] v0.1
     hr.text-primary
     a.nav-link.active[href="#"]
       span.fa.fa-dashboard.fa-fw
@@ -18,6 +18,9 @@ div.d-none.h-100.bg-dark[id="app"]
     a.nav-link[href="#logs"]
       span.fa.fa-file.fa-fw
       span.navbar-text.ms-2 Logs
+    a.nav-link[href="#logs"]
+      span.fa.fa-wrench.fa-fw
+      span.navbar-text.ms-2 Diagnostics
     hr.text-primary
     a.nav-link[href="#wireguard"]
       span.fa.fa-cube.fa-fw
@@ -31,7 +34,7 @@ div.d-none.h-100.bg-dark[id="app"]
       span.navbar-text.ms-2 Reboot
     a.nav-link[href="javascript:logout();"]
       span.fa.fa-sign-out.fa-fw
-      span.navbar-text.ms-2 Sign out
+      span.navbar-text.ms-2 Logout
   div.flex-column.w-100[id="main"]
     import dashboard
     import network

@@ -19,6 +19,8 @@ const HTTP_401            = 401;
 
 const ERR_LOGIN_FAILED    =
   "Login credentials are invalid";
+const ERR_SERVICE_FAILED  =
+  "Service did not successfully complete command";  
 
 const ATTR_ID             = "id";
 
@@ -40,6 +42,15 @@ const VIEW_LOGS           = "logs";
 const VIEW_WIREGUARD      = "wireguard";
 
 const NULL_STRING         = "";
+
+const SERVICE_WIREGUARD   = "wireguard";
+
+const UNIT_RESTART        = "RestartUnit";
+const UNIT_START          = "StartUnit";
+const UNIT_STOP           = "StopUnit";
+
+const WARNING_SERVICE     =
+  "This action might impact connected users of this service, do you wish to proceed?";
 
 
 function parseIds(r) {
@@ -264,27 +275,40 @@ function shutdown() {
 } // shutdown
 
 
-function serviceCommand(c) {
+function serviceCall(s, c) {
 
-  fetch(`${API}${API_SERVICES}`, {
+  let res = confirm(WARNING_SERVICE);
+
+  if(!res) {
+    return;
+  }
+
+  fetch(`${API}${API_SERVICES}/${SERVICE_WIREGUARD}?method=${c}`, {
     method: HTTP_PUT,
   })
   .then((response) => {
-    if(response.ok) return response.json();
+    
+    if(response.status === HTTP_401) {
+      alert(ERR_SERVICE_FAILED);
+    } else if(response.status === HTTP_200) {
+      console.log("TODO: show current state of service");
+    } else {
+      console.log("Unknown status: " + response.status);
+    }
+
   })
   .then((data) => {
-    console.log(data.length);
 
   })
   .catch((error) => {
     console.log(error);
   })
 
-} // serviceCommand
+} // serviceCall
 
 
 function hashtagListener() {
-
+  
   var hash = new URL(document.URL).hash.substring(1);
 
   if(hash === NULL_STRING) {
@@ -308,31 +332,3 @@ function hashtagListener() {
   }
 
 } // hashtagListener
-
-
-/*
-function init(pages) {
-
-  window.onload = function () {
-
-    var main    = document.getElementById(VIEW_MAIN);
-    var login   = document.getElementById(VIEW_LOGIN);
-
-    var hash = new URL(document.URL).hash;
-
-    if(hash === EMPTY) {
-
-      hideView(VIEW_LOGIN, DBLOCK);
-      
-      showFromList(VIEW_APP, VIEW_DASHBOARD, DFLEX);
-
-    } else {
-      hashtagListener();
-    }
-
-  }
-
-  window.addEventListener("hashchange", hashtagListener);
-
-} // init
-*/

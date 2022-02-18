@@ -16,8 +16,10 @@ const (
 
 
 const (
-	PARAM_NAME          	= "name"
 	PARAM_METHOD				  = "method"
+	PARAM_NAME          	= "name"
+  PARAM_PASS            = "pass"
+  PARAM_USER            = "user"
 )
 
 const (
@@ -97,12 +99,6 @@ const (
   PWD                   = "."
   ROOT_DIR              = "www"
   WEB_ASSETS            = "/assets/"
-)
-
-
-const (
-  PARAM_USER            = "user"
-  PARAM_PASS            = "pass"
 )
 
 
