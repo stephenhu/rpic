@@ -53,6 +53,41 @@ const WARNING_SERVICE     =
   "This action might impact connected users of this service, do you wish to proceed?";
 
 
+function getServiceState(s) {
+
+  fetch(`${API}${API_SERVICES}/${s}`, {
+    method: HTTP_GET,
+  })
+  .then((response) => {
+    
+    if(response.status === HTTP_200) {
+      return response.json();
+    }
+
+  })
+  .then((data) => {
+
+    console.log(data);
+
+    var e = document.getElementById(`state-${s}`);
+
+    if(e === null || e === undefined) {
+      console.log("state tag not found: " + s);
+    } else {
+
+      e.innerText = data.active;
+
+    }
+
+
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+
+} // getServiceState
+
+
 function parseIds(r) {
 
   var root = document.getElementById(r);
@@ -291,7 +326,7 @@ function serviceCall(s, c) {
     if(response.status === HTTP_401) {
       alert(ERR_SERVICE_FAILED);
     } else if(response.status === HTTP_200) {
-      console.log("TODO: show current state of service");
+      getServiceState(s);
     } else {
       console.log("Unknown status: " + response.status);
     }
@@ -326,6 +361,8 @@ function hashtagListener() {
     showView(VIEW_APP, DFLEX);
     showView(VIEW_SIDEBAR, DBLOCK);
     showView(VIEW_MAIN, DBLOCK);
+
+    getServiceState(hash);
 
     showFromList(VIEW_MAIN, hash, DBLOCK);
 

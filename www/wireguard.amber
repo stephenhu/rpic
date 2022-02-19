@@ -1,15 +1,16 @@
 div.container-fluid.d-none[id="wireguard"]
-  h1.display-2.mt-1.mb-3
+  h1.display-3.mt-1.mb-3.d-inline
     span.fa.fa-lock.me-3
     span.navbar-text Wireguard
-      small.small.text-muted v1.15.1
+    span.text-success[id="state-wireguard"]
+  h6.text-muted v1.15.1
   hr.text-primary.mb-3
-  button.btn.btn-primary.me-2[onclick="serviceCall(SERVICE_WIREGUARD, UNIT_START); return false;"]
+  button.btn.btn-outline-primary.me-2[onclick="serviceCall(SERVICE_WIREGUARD, UNIT_START); return false;"]
     span.fa.fa-play.me-2
     span.navbar-text Start
-  button.btn.btn-primary.me-2[onclick="serviceCall(SERVICE_WIREGUARD, UNIT_STOP); return false;"]
+  button.btn.btn-outline-primary.me-2[onclick="serviceCall(SERVICE_WIREGUARD, UNIT_STOP); return false;"]
     span.fa.fa-stop.me-2
     span.navbar-text Stop
-  button.btn.btn-primary.me-2[onclick="serviceCall(SERVICE_WIREGUARD, UNIT_RESTART); return false;"]
+  button.btn.btn-outline-primary.me-2[onclick="serviceCall(SERVICE_WIREGUARD, UNIT_RESTART); return false;"]
     span.fa.fa-rotate-right.me-2
     span.navbar-text Restart

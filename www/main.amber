@@ -18,7 +18,7 @@ div.d-none.h-100.bg-dark[id="app"]
     a.nav-link[href="#logs"]
       span.fa.fa-file.fa-fw
       span.navbar-text.ms-2 Logs
-    a.nav-link[href="#logs"]
+    a.nav-link[href="#diagnostics"]
       span.fa.fa-wrench.fa-fw
       span.navbar-text.ms-2 Diagnostics
     hr.text-primary
@@ -41,5 +41,6 @@ div.d-none.h-100.bg-dark[id="app"]
     import storage
     import services
     import logs
+    import diagnostics
     import wireguard
   

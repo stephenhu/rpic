@@ -1,5 +1,5 @@
 div.container-fluid.d-none.ms-2.me-2[id="services"]
-  h1.display-1.mt-1 Services
+  h1.display-3.mt-1 Services
   div.row.mt-5
     div.col-lg-4
       a.card[href="#wireguard"]
