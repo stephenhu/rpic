@@ -7,7 +7,7 @@
 * hostapd
 * dnsmasq
 * wireguard
-* resolv-
+* resolv
 
 ### development only
 
