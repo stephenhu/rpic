@@ -1,0 +1,11 @@
+
+Package: rpic
+Version: 0.1.0
+Architecture: all
+Essential: no
+Section: misc
+Priority: optional
+Maintainer: Stephen Hu <epynonymous@outlook.com>
+#Depends: debhelper (>= 9)
+Build-Depends: debhelper (>= 9), dh-systemd
+Description: Pi Controller service 

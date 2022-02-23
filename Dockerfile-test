@@ -1,0 +1,7 @@
+FROM ubuntu
+WORKDIR /usr/local/rpic
+COPY debian.deb .
+RUN apt-get update -y && \
+    dpkg -i debian.deb
+EXPOSE 9008
+CMD ["/usr/local/rpic/rpic"]

@@ -61,3 +61,40 @@ since most of these commands require super user privileges on raspbian, this cou
 rpic will provide a restful api which can be accessed by developers to integrate with their application or to write custom clients.  the most basic client will be included as a web interface which can be enabled or disabled.
 
 an ios client may be added, however, intrinsically, most applications will want to have the functionality embedded into their own user interface as opposed to having to use multiple interfaces.
+
+
+## build rpic
+
+rpic can be built as a container, binary, or debian pacakge 
+
+### container
+
+#### requirements
+
+`sudo apt-get install gcc, sqlite3, dpkg-dev, devscripts`
+
+#### build
+
+`docker build -t rpic .`
+
+### Binary
+
+#### requirements
+
+* golang 1.17.x+
+* sqlite3, gcc `sudo apt-get install gcc, sqlite3`
+
+#### build
+
+`go build`
+
+### debian package
+
+#### requirements
+
+* golang
+* gcc, sqlite3, dpkg-dev, devscripts `sudo apt-get install gcc sqlite3 dpkg-dev devscripts`
+
+#### build
+
+`dpkg-dev --build debian # from rpic directory`

@@ -1,0 +1,6 @@
+[Authentication for members of sudo group]
+Identity=unix-user:hu
+Action=org.freedesktop.systemd1.manage-units;org.freedesktop.login1.power_off;org.freedesktop.login1.reboot
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes

@@ -4,6 +4,7 @@ const (
 	APP_ADDRESS     			= "0.0.0.0"
   APP_ADMIN             = "admin"
   APP_ADMIN_PASSWORD    = "rooster2#"
+  APP_CONFIG            = "config.json"
 	APP_NAME							= "rpic"
 	APP_PORT        			= "9008"
 	APP_VERSION						= "1.0"
@@ -114,7 +115,8 @@ const (
 
 
 const (
-  
+  ERR_CONFIG_NOT_FOUND =
+    "config.json not found"
   ERR_DATABASE_CONNECTION =
     "Unable to connect to database"
   ERR_DATABASE_NOT_INITIALIZED =
