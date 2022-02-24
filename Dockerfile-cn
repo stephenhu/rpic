@@ -15,6 +15,7 @@ WORKDIR /usr/local/rpic
 RUN apt-get update -y
 COPY --from=builder /app/rpic .
 COPY --from=data /data/rpic.db .
+COPY www/ www/
 RUN ls -la
 EXPOSE 9008
 CMD ["/usr/local/rpic/rpic"]
