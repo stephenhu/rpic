@@ -6,10 +6,7 @@ AMD64="amd64"
 ARM64="arm64"
 LINUX="linux"
 
-DEFAULT_OS="linux"
-DEFAULT_ARCH="amd64"
-
-NULL = ""
+# colors
 
 BLUE=34
 CYAN=36
@@ -18,10 +15,8 @@ RED=31
 
 # defaults
 
-SRC="."
-dst="debian"
-arch=""
-os="linux"
+DEFAULT_OS="linux"
+DEFAULT_ARCH="amd64"
 
 # helpers
 
@@ -42,6 +37,7 @@ timestamp()
 error()
 {
   echo -e "[$(timestamp)] \e[31m$1\e[0m"
+  exit
 }
 
 
@@ -83,22 +79,43 @@ check()
     log "GOARCH not supported: $GOARCH, only $AMD64 and $ARM64 are supported."
   fi
 
+  go version > /dev/null 2>&1
+
+  if [[ $? -ne 0 ]]; then
+    error "golang has not been installed, please see https://golang.org."
+  fi
+
+  migrate -version > /dev/null 2>&1
+
+  if [[ $? -ne 0 ]]; then
+    error "golang-migrate/migrate has not been installed, please see https://github.com/golang-migrate/migrate"
+  fi
+
 }
 
 # clean
 
 clean()
 {
-  log "clean"
+  log "Cleaning evnvironment"
+
+  if [[ -f "rpic" ]]; then
+    log "Removing rpic binary"
+    rm rpic
+  fi
+
+  if [[ -f "rpic.db" ]]; then
+    log "Removing rpic.db"
+    rm rpic.db
+  fi
+
 }
 
 # build:  GOOS, GOARCH
 
 build()
 {
-
   go build
-  #migrate -database sqlite3://rpic.db -path db/migrations up
 }
 
 # init_database
@@ -106,25 +123,37 @@ build()
 init_database()
 {
   log "Initializing database"
+  migrate -database sqlite3://rpic.db -path db/migrations up
 }
 
 # stage
 
 stage()
 {
+  
+  log "Copying rpic binary to debian for staging"
   cp rpic debian/usr/local/rpic/
+
+  log "Copying rpic web templates to debian for staging"
   cp -R www debian/usr/local/rpic/
+
+  log "Copying rpic database to debian for staging"
   cp rpic.db debian/usr/local/rpic/
+
 }
 
 # package
 
 package()
 {
+  log "Building debian package"
   dpkg-deb --build debian
 }
 
 log "Build started..."
+clean
 check
 build
 init_database
+stage
+package

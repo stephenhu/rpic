@@ -83,6 +83,7 @@ rpic can be built as a container, binary, or debian pacakge
 
 * golang 1.17.x+
 * sqlite3, gcc `sudo apt-get install gcc, sqlite3`
+* golang-migrate/migrate `go install -tags 'sqlite3' github.com/golang-migrate/migrate/v4/cmd/migrate@latest`
 
 #### build
 
