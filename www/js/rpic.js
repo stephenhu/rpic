@@ -178,6 +178,7 @@ function hideView(v, t) {
 } // hideView
 
 
+// TODO: return something so caller can exit gracefully
 function checkAuth() {
 
   window.addEventListener("hashchange", hashtagListener);
@@ -293,6 +294,8 @@ function reboot() {
 
 function shutdown() {
 
+  checkAuth();
+
   fetch(`${API}${API_SYSTEMS}`, {
     method: HTTP_PUT,
   })
@@ -317,6 +320,8 @@ function serviceCall(s, c) {
   if(!res) {
     return;
   }
+
+  checkAuth();
 
   fetch(`${API}${API_SERVICES}/${SERVICE_WIREGUARD}?method=${c}`, {
     method: HTTP_PUT,
