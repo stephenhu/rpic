@@ -76,7 +76,7 @@ check()
     log "GOOS not supported: $GOOS, only $LINUX is supported."
   fi
 
-  if ! [[ $GOARCH == $AMD64 || $GOARCH == ARM || $GOARCH == ARM64 ]]; then
+  if ! [[ $GOARCH == $AMD64 || $GOARCH == $ARM || $GOARCH == $ARM64 ]]; then
     log "GOARCH not supported: $GOARCH, only $AMD64, $ARM, and $ARM64 are supported."
   fi
 
