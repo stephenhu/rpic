@@ -1,7 +1,7 @@
 FROM golang AS builder
 WORKDIR /app
 COPY . .
-ENV GO1111MODULE=on
+ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn,direct
 RUN GOOS=linux GOARCH=amd64 go get && go build
 

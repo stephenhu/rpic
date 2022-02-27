@@ -3,6 +3,7 @@
 # constants
 
 AMD64="amd64"
+ARM="arm"
 ARM64="arm64"
 LINUX="linux"
 
@@ -75,8 +76,8 @@ check()
     log "GOOS not supported: $GOOS, only $LINUX is supported."
   fi
 
-  if ! [[ $GOARCH == $AMD64 || $GOARCH == ARM64 ]]; then
-    log "GOARCH not supported: $GOARCH, only $AMD64 and $ARM64 are supported."
+  if ! [[ $GOARCH == $AMD64 || $GOARCH == ARM || $GOARCH == ARM64 ]]; then
+    log "GOARCH not supported: $GOARCH, only $AMD64, $ARM, and $ARM64 are supported."
   fi
 
   go version > /dev/null 2>&1
@@ -91,13 +92,17 @@ check()
     error "golang-migrate/migrate has not been installed, please see https://github.com/golang-migrate/migrate"
   fi
 
+  if ! [ -d debian/usr/local/rpic ]; then
+    mkdir -p debian/usr/local/rpic
+  fi
+
 }
 
 # clean
 
 clean()
 {
-  log "Cleaning evnvironment"
+  log "Cleaning environment"
 
   if [[ -f "rpic" ]]; then
     log "Removing rpic binary"
@@ -107,6 +112,11 @@ clean()
   if [[ -f "rpic.db" ]]; then
     log "Removing rpic.db"
     rm rpic.db
+  fi
+
+  if [[ -f "debian.deb" ]]; then
+    log "Removing debian.deb packages"
+    rm debian.deb
   fi
 
 }
@@ -148,6 +158,15 @@ package()
 {
   log "Building debian package"
   dpkg-deb --build debian
+
+  if [[ -f debian.deb ]]; then
+
+    log "Renaming debian package..."
+
+    mv debian.deb "rpic-0.1-$GOOS-$GOARCH.deb"
+
+  fi
+
 }
 
 log "Build started..."
