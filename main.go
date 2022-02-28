@@ -8,15 +8,18 @@ import (
 	"net/http"
 	"os"
 
-	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
+	//_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
+	_ "modernc.org/sqlite"
 	"github.com/gorilla/mux"
 )
 
 
 var data *sql.DB
+var appConf Config
 
 
 var (
+	conf        = flag.String("conf", DEFAULT_CONF, "config file path")
 	database		= flag.String("database", DEFAULT_DATABASE, "database file path")
 )
 
@@ -73,6 +76,12 @@ func initRouter() *mux.Router {
 func main() {
 
 	flag.Parse()
+
+	if conf == nil || *conf == STR_EMPTY {
+		*conf = DEFAULT_CONF
+	}
+
+	//parseConfig()
 
 	connectDatabase()
 

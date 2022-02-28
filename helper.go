@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 )
 
 
@@ -39,3 +40,17 @@ func checkAdmin() {
 	}
 
 } // checkAdmin
+
+
+func fileExists(f string) bool {
+
+	_, err := os.Stat(f)
+
+	if err != nil || os.IsNotExist(err) {
+		log.Println(err)
+		return false
+	}
+
+	return true
+
+} // fileExists

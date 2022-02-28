@@ -133,7 +133,7 @@ build()
 init_database()
 {
   log "Initializing database"
-  migrate -database sqlite3://rpic.db -path db/migrations up
+  migrate -database sqlite://rpic.db -path db/migrations up
 }
 
 # stage

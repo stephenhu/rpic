@@ -4,15 +4,15 @@ const (
 	APP_ADDRESS     			= "0.0.0.0"
   APP_ADMIN             = "admin"
   APP_ADMIN_PASSWORD    = "rooster2#"
-  APP_CONFIG            = "config.json"
 	APP_NAME							= "rpic"
 	APP_PORT        			= "9008"
 	APP_VERSION						= "1.0"
 )
 
 const (
+  DEFAULT_CONF                = ".rpic"
   DEFAULT_DATABASE            = "./rpic.db"
-  DEFAULT_DATABASE_DRIVER     = "sqlite3"
+  DEFAULT_DATABASE_DRIVER     = "sqlite"
 )
 
 
@@ -115,8 +115,10 @@ const (
 
 
 const (
+  ERR_CONF_EXISTS =
+    "Config file exists and will not be overwritten"
   ERR_CONFIG_NOT_FOUND =
-    "config.json not found"
+    "Config file not found"
   ERR_DATABASE_CONNECTION =
     "Unable to connect to database"
   ERR_DATABASE_NOT_INITIALIZED =
