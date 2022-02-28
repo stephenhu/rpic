@@ -1,0 +1,13 @@
+[Unit]
+Description=raspberry pi controller daemon
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/local/rpic
+ExecStart=/usr/local/rpic/rpic
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

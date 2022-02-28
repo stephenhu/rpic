@@ -1,0 +1,13 @@
+# enable and start service
+
+if [ -d /run/systemd/system ]; then
+  systemctl --system daemon-reload >/dev/null || true
+  if ! deb-systemd-invoke is-enabled rpic >/dev/null
+  then
+    deb-systemd-invoke enable rpic >/dev/null || true
+  fi
+  deb-systemd-invoke start rpic >/dev/null || true
+fi
+
+exit 0
+

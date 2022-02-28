@@ -2,6 +2,6 @@ FROM golang
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn,direct
 WORKDIR /app
-RUN go install -tags 'sqlite3' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+RUN go install -tags 'sqlite' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 ENTRYPOINT ["migrate"]
 CMD ["--help"]

@@ -3,12 +3,12 @@ WORKDIR /app
 COPY . .
 ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn,direct
-RUN GOOS=linux GOARCH=amd64 go get && go build
+RUN go get && go build
 
-FROM migrate/migrate-sqlite3 AS data
+FROM migrate/migrate-sqlite AS data
 WORKDir /data
 COPY db/migrations db/migrations
-RUN migrate -database sqlite3://rpic.db -path db/migrations up
+RUN migrate -database sqlite://rpic.db -path db/migrations up
 
 FROM ubuntu
 WORKDIR /usr/local/rpic

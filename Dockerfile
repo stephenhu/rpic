@@ -1,12 +1,12 @@
 FROM golang AS builder
 WORKDIR /app
 COPY . .
-RUN GOOS=linux GOARCH=amd64 go get && go build
+RUN go get && go build
 
-FROM migrate/migrate-sqlite3 AS data
+FROM migrate/migrate-sqlite AS data
 WORKDIR /db
 COPY db/migrations/ .
-RUN migrate -source file://db/migrations -database sqlite3://rpic.db up 2
+RUN migrate -source file://db/migrations -database sqlite://rpic.db up 2
 
 FROM ubuntu
 WORKDIR /usr/local/rpic

@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+if [ -d /run/systemd/system ]; then
+  deb-systemd-invoke stop rpic >/dev/null || true
+  deb-systemd-invoke disable rpic >/dev/null || true
+fi
+
+exit 0
+
