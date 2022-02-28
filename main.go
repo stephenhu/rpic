@@ -15,7 +15,7 @@ import (
 
 
 var data *sql.DB
-var appConf Config
+//var appConf Config
 
 
 var (
